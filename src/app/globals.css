@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #000000;
+    --foreground: #ffffff;
+    --card: #121212;
+    --card-foreground: #ffffff;
+    --primary: #1ed760;
+    --primary-foreground: #000000;
+    --muted: #b3b3b3;
+    --border: #282828;
+  }
+}
+
+body {
+  @apply bg-background text-foreground;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
