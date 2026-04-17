@@ -37,8 +37,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 02-01: Scaffold Zustand store and mount native dummy `<audio>` element
-- [ ] 02-02: Build PlayerBar component with active SVG controls and range sliders
+- [x] 02-01: Scaffold Zustand store and mount native dummy `<audio>` element
+- [x] 02-02: Build PlayerBar component with active SVG controls and range sliders
 
 ### Phase 3: Core Views & Navigation
 **Goal**: Flesh out the central routing (Home vs. Playlist) and connect track rows to the global audio player.

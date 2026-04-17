@@ -4,6 +4,7 @@ export interface Track {
   id: string;
   title: string;
   artist: string;
+  album: string;
   albumArt: string;
   src: string;
   duration: number;
@@ -28,6 +29,7 @@ export const MOCK_TRACK: Track = {
   id: '1',
   title: 'SoundHelix Song 1',
   artist: 'T. Schürger',
+  album: 'SoundHelix Examples',
   albumArt: '/placeholder-art.svg',
   src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
   duration: 372,
