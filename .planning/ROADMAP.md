@@ -24,7 +24,7 @@ A 4-phase journey to build a complete frontend UI clone of Spotify. We start by 
 **Plans**: 1 plan
 
 Plans:
-- [ ] 01-01: Initialize Next.js app with CSS Grid layout shell and Sidebar
+- [x] 01-01: Initialize Next.js app with CSS Grid layout shell and Sidebar
 
 ### Phase 2: Global Audio & Playback Bar
 **Goal**: Implement the robust audio engine and persistence layer using Zustand, tying it to the UI controls.
