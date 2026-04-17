@@ -1,62 +1,80 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Home, Search, Library } from 'lucide-react';
+import { Home, Search, Library, Plus } from 'lucide-react';
 import { mockPlaylists } from '@/data/mockData';
+import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Sidebar() {
-  const pathname = usePathname();
+  const { data: session } = useSession();
 
   return (
-    <div className="flex flex-col h-full gap-2 text-sm max-h-full">
-      {/* Main Nav */}
-      <div className="rounded-lg p-4 flex flex-col gap-1" style={{ background: '#121212' }}>
-        <Link
-          href="/"
-          className={`flex items-center gap-3 px-2 py-2 rounded font-semibold transition-colors ${
-            pathname === '/' ? 'text-white' : 'text-[#b3b3b3] hover:text-white'
-          }`}
-        >
-          <Home size={24} />
-          Home
+    <div className="w-full h-full flex flex-col gap-2 relative">
+      {/* Top Navigation Block */}
+      <div className="bg-[#121212] rounded-lg p-4 flex flex-col gap-4">
+        <Link href="/" className="flex items-center gap-4 text-neutral-400 hover:text-white transition-colors">
+          <Home className="w-6 h-6" />
+          <span className="font-bold">Home</span>
         </Link>
-        <Link
-          href="/search"
-          className={`flex items-center gap-3 px-2 py-2 rounded font-semibold transition-colors ${
-            pathname === '/search' ? 'text-white' : 'text-[#b3b3b3] hover:text-white'
-          }`}
-        >
-          <Search size={24} />
-          Search
+        <Link href="/search" className="flex items-center gap-4 text-neutral-400 hover:text-white transition-colors">
+          <Search className="w-6 h-6" />
+          <span className="font-bold">Search</span>
         </Link>
       </div>
 
-      {/* Library */}
-      <div className="rounded-lg p-4 flex flex-col gap-1 flex-1 overflow-y-auto" style={{ background: '#121212' }}>
-        <div className="flex items-center gap-3 px-2 mb-3">
-          <Library size={24} className="text-[#b3b3b3]" />
-          <span className="font-semibold text-[#b3b3b3]">Your Library</span>
+      {/* Library Block */}
+      <div className="bg-[#121212] rounded-lg flex-1 flex flex-col overflow-hidden relative">
+        <div className="p-4 flex items-center justify-between text-neutral-400 hover:text-white transition-colors cursor-pointer">
+          <div className="flex items-center gap-4">
+            <Library className="w-6 h-6" />
+            <span className="font-bold">Your Library</span>
+          </div>
+          <Plus className="w-5 h-5 hover:bg-neutral-800 rounded-full p-0.5" />
         </div>
-        {mockPlaylists.map((playlist) => (
-          <Link
-            key={playlist.id}
-            href={`/playlist/${playlist.id}`}
-            className={`flex items-center gap-3 px-2 py-2 rounded transition-colors ${
-              pathname === `/playlist/${playlist.id}` ? 'bg-[#282828] text-white' : 'text-[#b3b3b3] hover:text-white hover:bg-[#1a1a1a]'
-            }`}
-          >
-            <div
-              className="w-10 h-10 rounded flex-shrink-0"
-              style={{ background: playlist.coverColor }}
-            />
-            <div className="min-w-0">
-              <p className="text-sm font-medium text-white truncate">{playlist.name}</p>
-              <p className="text-xs text-[#b3b3b3] truncate">Playlist</p>
-            </div>
-          </Link>
-        ))}
+        
+        {/* Playlists Menu */}
+        <div className="flex-1 overflow-y-auto px-2 pb-4">
+          <ul className="flex flex-col gap-1">
+            {mockPlaylists.map((playlist) => (
+              <li key={playlist.id}>
+                <Link
+                  href={`/playlist/${playlist.id}`}
+                  className="flex items-center gap-3 p-2 rounded-md hover:bg-neutral-800/50 transition-colors cursor-pointer group"
+                >
+                  <img src={playlist.coverUrl} alt="" className="w-12 h-12 rounded object-cover shadow-[0_4px_12px_rgba(0,0,0,0.5)]" />
+                  <div className="flex flex-col overflow-hidden">
+                    <span className="text-white truncate">{playlist.name}</span>
+                    <span className="text-neutral-400 text-sm truncate">Playlist • {playlist.owner}</span>
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
+
+      {session ? (
+        <div className="mt-2 bg-[#121212] rounded-lg p-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            {session.user?.image ? (
+              <img src={session.user.image} alt="" className="w-10 h-10 rounded-full" />
+            ) : (
+              <div className="w-10 h-10 rounded-full bg-neutral-800 flex items-center justify-center">?</div>
+            )}
+            <span className="font-bold text-white max-w-[100px] truncate">{session.user?.name}</span>
+          </div>
+          <button onClick={() => signOut()} className="text-xs font-bold text-neutral-400 hover:text-white">
+            Log out
+          </button>
+        </div>
+      ) : (
+        <button 
+          onClick={() => signIn('spotify')}
+          className="mt-2 w-full py-3 bg-white text-black font-bold rounded-full hover:scale-105 transition-transform"
+        >
+          Log in with Spotify
+        </button>
+      )}
     </div>
   );
 }
