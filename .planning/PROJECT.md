@@ -2,46 +2,44 @@
 
 ## What This Is
 
-A high-end web application clone of Spotify, designed primarily as a frontend UI showcase. It offers a premium, modern design matching the authentic Spotify experience across desktop and mobile browsers, featuring seamless animations, mock data playback, and functional playlists.
+A high-end web application clone of Spotify, designed primarily as a frontend UI showcase, transitioning into a fully integrated Spotify client using the official Spotify Web API and Spotify Web Playback SDK. It features semantic HTML, glassmorphism, responsive behavior, and now real playback for authenticated Premium users.
 
 ## Core Value
 
-A pixel-perfect, stunning, and responsive user interface that accurately mirrors Spotify's look and feel, delivering an immersive front-end experience.
+A pixel-perfect, stunning, and responsive user interface that accurately mirrors Spotify's look and feel, paired with real music streaming via the user's authentic Spotify account.
 
 ## Current State
 
 **Shipped v1.0 (2026-04-17)**
-Successfully delivered a complete, responsive 100vh UI shell with full global audio playback capabilities (via Zustand and HTML5 audio), dynamic playlist extraction, and premium responsive aesthetics (Framer Motion transitions, glassmorphism, Spotify-accurate scroll layouts).
+Successfully delivered a complete, responsive 100vh UI shell with full global audio playback capabilities, dynamic playlist extraction, and premium responsive aesthetics (Framer Motion transitions, glassmorphism, Spotify-accurate scroll layouts).
 
 ## Next Milestone Goals (v2.0)
 
-- Personalization: "Liked Songs" local storage persistence
-- Custom right-click context menu outshining browser defaults
-- True keyboard accessibility and focus management
-- Global search functionality simulation
+- **Spotify Web API Authentication:** Implement OAuth2 login flow (NextAuth / custom).
+- **Real User Data:** Replace all mock data with the user's actual playlists, liked songs, and recently played albums.
+- **Spotify Web Playback SDK:** Connect the global Zustand store to the official browser SDK for real DRM music streaming (requires Spotify Premium).
 
 ## Out of Scope
 
-- Real backend authentication — Focus is UI, so we use mock/local state for users
-- Direct MP3 streaming server — We will use mock tracks or free API previews due to DRM and backend complexity
+- Real backend authentication for non-Spotify functions (we strictly rely on Spotify OAuth).
+- Offline downloading (Browser restriction).
 
 ## Context
 
-- Building a standout UI project to demonstrate mastery of modern web styling (React/Next.js)
-- Requires rich, dynamic aesthetics. Visual excellence is paramount over deep backend integration.
-- Target environment: Modern Browsers
+- Evolving the v1 UI shell to become a functional music player.
+- Integrating external authenticated APIs.
 
 ## Constraints
 
 - **Tech Stack**: React/Next.js (App Router), Vanilla CSS overlay / Tailwind v4 for utility styling.
-- **Data Dependency**: Bound by mock data (SoundHelix). Real DRM music streaming is unsupported.
+- **Data Dependency**: The Spotify Web Playback SDK exclusively requires the user to have a Spotify Premium subscription.
 
 ## Key Decisions
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
 | Web App over Native Mobile | Focus on modern web capabilities and instant accessibility | Validated (v1.0 is fully responsive and behaves like an app) |
-| Mock/Preview Data Playback | Bypasses backend streaming complexity | Validated (SoundHelix MP3s work flawlessly with UI state) |
+| Transition to Real API | The UI is robust enough to handle real streaming data, satisfying the user's primary goal. | Active for v2.0 |
 
 <details>
 <summary>Previous Content</summary>
