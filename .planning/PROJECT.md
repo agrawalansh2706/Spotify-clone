@@ -8,21 +8,19 @@ A high-end web application clone of Spotify, designed primarily as a frontend UI
 
 A pixel-perfect, stunning, and responsive user interface that accurately mirrors Spotify's look and feel, delivering an immersive front-end experience.
 
-## Requirements
+## Current State
 
-### Validated
+**Shipped v1.0 (2026-04-17)**
+Successfully delivered a complete, responsive 100vh UI shell with full global audio playback capabilities (via Zustand and HTML5 audio), dynamic playlist extraction, and premium responsive aesthetics (Framer Motion transitions, glassmorphism, Spotify-accurate scroll layouts).
 
-(None yet — ship to validate)
+## Next Milestone Goals (v2.0)
 
-### Active
+- Personalization: "Liked Songs" local storage persistence
+- Custom right-click context menu outshining browser defaults
+- True keyboard accessibility and focus management
+- Global search functionality simulation
 
-- [ ] Responsive Web Layout (Desktop, Tablet, Mobile)
-- [ ] Persistent Playback Bar with functional Play/Pause toggle
-- [ ] Playlists rendering with mock track data
-- [ ] Premium aesthetics (glassmorphism, modern typography, hover animations)
-- [ ] State management for currently playing tracks
-
-### Out of Scope
+## Out of Scope
 
 - Real backend authentication — Focus is UI, so we use mock/local state for users
 - Direct MP3 streaming server — We will use mock tracks or free API previews due to DRM and backend complexity
@@ -35,32 +33,27 @@ A pixel-perfect, stunning, and responsive user interface that accurately mirrors
 
 ## Constraints
 
-- **Tech Stack**: React/Next.js for the framework, Vanilla CSS or tailored utility styling to ensure high-grade customized UI.
-- **Data Dependency**: Bound by mock data or free API constraints. Real DRM music streaming is unsupported.
+- **Tech Stack**: React/Next.js (App Router), Vanilla CSS overlay / Tailwind v4 for utility styling.
+- **Data Dependency**: Bound by mock data (SoundHelix). Real DRM music streaming is unsupported.
 
 ## Key Decisions
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Web App over Native Mobile | Focus on modern web capabilities and instant accessibility | — Pending |
-| Mock/Preview Data Playback | Focuses effort on the frontend UI where the core value lies, bypassing backend streaming complexity | — Pending |
+| Web App over Native Mobile | Focus on modern web capabilities and instant accessibility | Validated (v1.0 is fully responsive and behaves like an app) |
+| Mock/Preview Data Playback | Bypasses backend streaming complexity | Validated (SoundHelix MP3s work flawlessly with UI state) |
 
-## Evolution
+<details>
+<summary>Previous Content</summary>
 
-This document evolves at phase transitions and milestone boundaries.
+### Active
+- [x] Responsive Web Layout (Desktop, Tablet, Mobile)
+- [x] Persistent Playback Bar with functional Play/Pause toggle
+- [x] Playlists rendering with mock track data
+- [x] Premium aesthetics (glassmorphism, modern typography, hover animations)
+- [x] State management for currently playing tracks
 
-**After each phase transition** (via `/gsd-transition`):
-1. Requirements invalidated? → Move to Out of Scope with reason
-2. Requirements validated? → Move to Validated with phase reference
-3. New requirements emerged? → Add to Active
-4. Decisions to log? → Add to Key Decisions
-5. "What This Is" still accurate? → Update if drifted
-
-**After each milestone** (via `/gsd-complete-milestone`):
-1. Full review of all sections
-2. Core Value check — still the right priority?
-3. Audit Out of Scope — reasons still valid?
-4. Update Context with current state
+</details>
 
 ---
-*Last updated: 2026-04-17 after initialization*
+*Last updated: 2026-04-17 after v1.0 release*
