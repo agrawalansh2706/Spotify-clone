@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Spotify Clone",
-  description: "A pixel-perfect UI showcase",
+  description: "A pixel-perfect Spotify UI showcase",
 };
 
 export default function RootLayout({
@@ -31,18 +31,29 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       suppressHydrationWarning
     >
-      <body>
-        <div className="h-screen w-full flex flex-col md:grid md:grid-cols-[280px_1fr] md:grid-rows-[1fr_90px] bg-black">
-          <div className="hidden md:block overflow-hidden bg-black w-full h-full p-2">
+      <body style={{ background: '#000', color: '#fff', height: '100vh', overflow: 'hidden' }}>
+        <div className="h-screen w-full flex flex-col md:grid md:grid-cols-[280px_1fr] md:grid-rows-[1fr_90px]" style={{ background: '#000' }}>
+          {/* Sidebar — desktop only */}
+          <div className="hidden md:block overflow-hidden p-2" style={{ background: '#000' }}>
             <Sidebar />
           </div>
-          <main className="flex-1 md:overflow-y-auto bg-card md:mt-2 md:mr-2 rounded-lg relative overflow-hidden" id="main-scroll-area">
+
+          {/* Main content */}
+          <main
+            className="flex-1 md:overflow-y-auto rounded-lg relative overflow-hidden md:mt-2 md:mr-2"
+            id="main-scroll-area"
+            style={{ background: '#121212' }}
+          >
             {children}
           </main>
-          <div className="hidden md:block col-span-2 bg-black w-full h-[90px]">
+
+          {/* Player bar — desktop */}
+          <div className="hidden md:block col-span-2" style={{ background: '#000' }}>
             <PlayerBar />
           </div>
-          <div className="block md:hidden bg-black fixed bottom-0 w-full z-50">
+
+          {/* Bottom tab bar — mobile */}
+          <div className="block md:hidden fixed bottom-0 w-full z-50" style={{ background: '#000' }}>
             <BottomTabBar />
           </div>
         </div>
