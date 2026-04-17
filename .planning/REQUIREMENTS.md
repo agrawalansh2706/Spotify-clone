@@ -45,25 +45,25 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| LAY-01 | Pending | Pending |
-| LAY-02 | Pending | Pending |
-| LAY-03 | Pending | Pending |
-| LAY-04 | Pending | Pending |
-| AUD-01 | Pending | Pending |
-| AUD-02 | Pending | Pending |
-| AUD-03 | Pending | Pending |
-| AUD-04 | Pending | Pending |
-| VIEW-01 | Pending | Pending |
-| VIEW-02 | Pending | Pending |
-| VIEW-03 | Pending | Pending |
-| VIEW-04 | Pending | Pending |
-| AES-01 | Pending | Pending |
-| AES-02 | Pending | Pending |
+| LAY-01 | Phase 1 | Pending |
+| LAY-02 | Phase 1 | Pending |
+| LAY-03 | Phase 1 | Pending |
+| LAY-04 | Phase 4 | Pending |
+| AUD-01 | Phase 2 | Pending |
+| AUD-02 | Phase 2 | Pending |
+| AUD-03 | Phase 2 | Pending |
+| AUD-04 | Phase 2 | Pending |
+| VIEW-01 | Phase 3 | Pending |
+| VIEW-02 | Phase 3 | Pending |
+| VIEW-03 | Phase 3 | Pending |
+| VIEW-04 | Phase 3 | Pending |
+| AES-01 | Phase 4 | Pending |
+| AES-02 | Phase 4 | Pending |
 
 **Coverage:**
 - v1 requirements: 14 total
-- Mapped to phases: 0
-- Unmapped: 14 ⚠️
+- Mapped to phases: 14
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-04-17*
