@@ -88,7 +88,16 @@ export default function PlayerBar() {
   );
 
   return (
-    <div className="h-[90px] w-full flex items-center justify-between px-4 select-none border-t border-[#282828]">
+    <div
+      className="h-[90px] w-full flex items-center justify-between px-4 select-none"
+      style={{
+        background: 'rgba(9, 9, 9, 0.85)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        borderTop: '1px solid rgba(255,255,255,0.08)',
+        boxShadow: '0 -4px 24px rgba(0,0,0,0.4)',
+      }}
+    >
       {/* Left: Track Info */}
       <div className="w-1/3 flex items-center gap-3 min-w-0">
         <div className="relative w-14 h-14 flex-shrink-0 bg-[#282828] rounded overflow-hidden">

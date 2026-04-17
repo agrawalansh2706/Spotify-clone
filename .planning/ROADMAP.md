@@ -51,8 +51,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 03-01: Build Home Page grid and Playlist table shell
-- [ ] 03-02: Populate mock track data and connect onClick handlers to Zustand `play()` action
+- [x] 03-01: Build Home Page grid and Playlist table shell
+- [x] 03-02: Populate mock track data and connect onClick handlers to Zustand `play()` action
 
 ### Phase 4: Premium Aesthetics
 **Goal**: Elevate the UI from functional to stunning with Spotify's signature effects.
