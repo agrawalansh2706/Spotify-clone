@@ -10,14 +10,18 @@ A pixel-perfect, stunning, and responsive user interface that accurately mirrors
 
 ## Current State
 
+**Shipped v2.0 (2026-04-18)**
+Migrated from mock data to the authentic Spotify Web API and Web Playback SDK. Users can now authenticate via Spotify OAuth, browse their real playlists, and stream high-quality audio directly in the browser through the official SDK integration.
+
 **Shipped v1.0 (2026-04-17)**
-Successfully delivered a complete, responsive 100vh UI shell with full global audio playback capabilities, dynamic playlist extraction, and premium responsive aesthetics (Framer Motion transitions, glassmorphism, Spotify-accurate scroll layouts).
+Delivered the responsive UI shell and mobile tab navigation.
 
-## Next Milestone Goals (v2.0)
+## Next Milestone Goals (v3.0)
 
-- **Spotify Web API Authentication:** Implement OAuth2 login flow (NextAuth / custom).
-- **Real User Data:** Replace all mock data with the user's actual playlists, liked songs, and recently played albums.
-- **Spotify Web Playback SDK:** Connect the global Zustand store to the official browser SDK for real DRM music streaming (requires Spotify Premium).
+- **Social Features**: Friend activity feed simulation.
+- **Search**: Fully functional global search with filtering (Artist, Album, Playlist).
+- **Library Management**: Ability to like tracks and create/edit playlists directly from the app.
+- **Interactive Lyrics**: Syncing lyrics via a third-party API or Spotify lyrics endpoint.
 
 ## Out of Scope
 
