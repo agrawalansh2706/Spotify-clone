@@ -1,6 +1,6 @@
-'use client';
-import React from 'react';
 import { Music2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { usePlayerStore, Track } from '@/store/playerStore';
 
 interface FriendRowProps {
   friend: {
@@ -18,8 +18,31 @@ interface FriendRowProps {
 }
 
 export const FriendRow: React.FC<FriendRowProps> = ({ friend }) => {
+  const router = useRouter();
+  const play = usePlayerStore(state => state.play);
+
+  const handleEntityClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!friend.currentTrack) return;
+    
+    if (friend.currentTrack.type === 'track') {
+      // Simulate playing the track
+      play({
+        id: friend.currentTrack.id,
+        title: friend.currentTrack.title,
+        artist: friend.currentTrack.artist,
+        album: 'Spotify Social',
+        albumArt: 'https://misc.scdn.co/liked-songs/liked-songs-300.png',
+        uri: `spotify:track:${friend.currentTrack.id}`,
+        duration: 180
+      });
+    } else {
+      router.push(`/${friend.currentTrack.type}/${friend.currentTrack.id}`);
+    }
+  };
+
   return (
-    <div className="flex gap-4 p-2 rounded-md hover:bg-white/5 transition-all group cursor-pointer">
+    <div className="flex gap-4 p-2 rounded-md hover:bg-white/5 transition-all group cursor-pointer" onClick={handleEntityClick}>
       <div className="relative flex-shrink-0">
         <div className="w-10 h-10 rounded-full bg-neutral-800 overflow-hidden shadow-lg border border-white/5">
           {friend.image ? (
