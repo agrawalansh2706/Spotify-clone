@@ -2,7 +2,6 @@
 import React, { useState, useCallback } from 'react';
 import { Play, Pause, SkipBack, SkipForward, Shuffle, Repeat, Volume2, Heart } from 'lucide-react';
 import { usePlayerStore } from '@/store/playerStore';
-import { useAudioEngine } from '@/hooks/useAudioEngine';
 import Image from 'next/image';
 
 function formatTime(seconds: number): string {
@@ -60,7 +59,6 @@ function Slider({
 }
 
 export default function PlayerBar() {
-  const audioRef = useAudioEngine();
   const {
     currentTrack,
     isPlaying,
@@ -70,14 +68,15 @@ export default function PlayerBar() {
     toggle,
     setProgress,
     setVolume,
+    player,
+    isReady
   } = usePlayerStore();
 
   const handleSeek = useCallback(
     (val: number) => {
-      if (audioRef.current) audioRef.current.currentTime = val;
       setProgress(val);
     },
-    [audioRef, setProgress]
+    [setProgress]
   );
 
   const handleVolume = useCallback(

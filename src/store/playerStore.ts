@@ -6,7 +6,7 @@ export interface Track {
   artist: string;
   album: string;
   albumArt: string;
-  src: string;
+  uri: string;
   duration: number;
 }
 
@@ -16,6 +16,17 @@ interface PlayerState {
   progress: number;   // seconds elapsed
   duration: number;   // total seconds
   volume: number;     // 0-1
+  
+  // Spotify SDK Specific
+  deviceId: string | null;
+  player: Spotify.Player | null;
+  isReady: boolean;
+  playbackError: string | null;
+
+  setPlayer: (player: Spotify.Player) => void;
+  setDeviceId: (id: string) => void;
+  setReady: (ready: boolean) => void;
+  syncState: (state: Spotify.PlaybackState | null) => void;
 
   play: (track: Track) => void;
   pause: () => void;
@@ -25,27 +36,81 @@ interface PlayerState {
   setVolume: (val: number) => void;
 }
 
-export const MOCK_TRACK: Track = {
-  id: '1',
-  title: 'SoundHelix Song 1',
-  artist: 'T. Schürger',
-  album: 'SoundHelix Examples',
-  albumArt: '/placeholder-art.svg',
-  src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-  duration: 372,
-};
-
-export const usePlayerStore = create<PlayerState>((set) => ({
-  currentTrack: MOCK_TRACK,
+export const usePlayerStore = create<PlayerState>((set, get) => ({
+  currentTrack: null,
   isPlaying: false,
   progress: 0,
-  duration: MOCK_TRACK.duration,
+  duration: 0,
   volume: 0.8,
 
-  play: (track) => set({ currentTrack: track, isPlaying: true }),
-  pause: () => set({ isPlaying: false }),
-  toggle: () => set((state) => ({ isPlaying: !state.isPlaying })),
-  setProgress: (seconds) => set({ progress: seconds }),
+  deviceId: null,
+  player: null,
+  isReady: false,
+  playbackError: null,
+
+  setPlayer: (player) => set({ player }),
+  setDeviceId: (deviceId) => set({ deviceId }),
+  setReady: (isReady) => set({ isReady }),
+  
+  syncState: (state) => {
+    if (!state) return;
+    
+    const track = state.track_window.current_track;
+    if (track) {
+      set({
+        currentTrack: {
+          id: track.id || '',
+          title: track.name,
+          artist: track.artists.map(a => a.name).join(', '),
+          album: track.album.name,
+          albumArt: track.album.images[0]?.url || '',
+          uri: track.uri,
+          duration: Math.floor(state.duration / 1000)
+        },
+        isPlaying: !state.paused,
+        progress: Math.floor(state.position / 1000),
+        duration: Math.floor(state.duration / 1000)
+      });
+    }
+  },
+
+  play: (track) => {
+    // If we have a player, we instruct it or use the API manually in the caller
+    // For now we just update state
+    set({ currentTrack: track, isPlaying: true });
+  },
+  
+  pause: () => {
+    const { player } = get();
+    if (player) {
+      player.pause();
+    }
+    set({ isPlaying: false });
+  },
+  
+  toggle: () => {
+    const { player } = get();
+    if (player) {
+      player.togglePlay();
+    }
+  },
+  
+  setProgress: (seconds) => {
+    const { player } = get();
+    if (player) {
+      player.seek(seconds * 1000);
+    }
+    set({ progress: seconds });
+  },
+  
   setDuration: (seconds) => set({ duration: seconds }),
-  setVolume: (val) => set({ volume: Math.max(0, Math.min(1, val)) }),
+  
+  setVolume: (val) => {
+    const { player } = get();
+    const cleanVal = Math.max(0, Math.min(1, val));
+    if (player) {
+      player.setVolume(cleanVal);
+    }
+    set({ volume: cleanVal });
+  },
 }));

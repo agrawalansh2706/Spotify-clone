@@ -9,18 +9,32 @@ interface TrackRowProps {
   index: number;
 }
 
+import { useSession } from "next-auth/react";
+import { spotifyApiFetch } from '@/lib/spotify';
+
 export default function TrackRow({ track, index }: TrackRowProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const { currentTrack, isPlaying, play, toggle } = usePlayerStore();
+  const { data: session } = useSession();
+  const { currentTrack, isPlaying, toggle, deviceId } = usePlayerStore();
 
   const isCurrentTrack = currentTrack?.id === track.id;
 
-  const handlePlayClick = (e: React.MouseEvent) => {
+  const handlePlayClick = async (e: React.MouseEvent) => {
     e.stopPropagation();
     if (isCurrentTrack) {
       toggle();
-    } else {
-      play(track);
+    } else if (deviceId && session && track.uri) {
+      try {
+        await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
+          method: 'PUT',
+          body: JSON.stringify({ uris: [track.uri] }),
+          headers: {
+            Authorization: `Bearer ${session.user.accessToken}`,
+          },
+        });
+      } catch (err) {
+        console.error("Playback failed", err);
+      }
     }
   };
 
@@ -29,7 +43,7 @@ export default function TrackRow({ track, index }: TrackRowProps) {
       className="group grid grid-cols-[16px_1fr_1fr_minmax(120px,1fr)] md:grid-cols-[16px_minmax(120px,4fr)_2fr_120px] gap-4 px-4 py-2 hover:bg-[#ffffff1a] rounded-md transition-colors cursor-pointer text-sm text-[#b3b3b3] items-center"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onDoubleClick={() => play(track)}
+      onDoubleClick={(e: any) => handlePlayClick(e)}
     >
       {/* 1. Track Number / Play icon / Equilizer */}
       <div className="flex items-center justify-end w-4 h-4">
