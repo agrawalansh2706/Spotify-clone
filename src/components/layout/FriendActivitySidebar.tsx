@@ -3,49 +3,36 @@ import React, { useState, useEffect } from 'react';
 import { X, UserPlus } from 'lucide-react';
 import { useUIStore } from '@/store/uiStore';
 import { FriendRow } from './FriendRow';
-
-const MOCK_FRIENDS = [
-  {
-    id: '1',
-    name: 'Anansh',
-    lastActive: '3m',
-    currentTrack: {
-      title: 'Starboy',
-      artist: 'The Weeknd',
-      id: 'track_1',
-      type: 'track' as const
-    }
-  },
-  {
-    id: '2',
-    name: 'Sarah',
-    lastActive: '5m',
-    currentTrack: {
-      title: 'Espresso',
-      artist: 'Sabrina Carpenter',
-      id: 'track_2',
-      type: 'track' as const
-    }
-  },
-  {
-    id: '3',
-    name: 'Michael',
-    lastActive: '12m',
-    currentTrack: {
-      title: 'Daily Mix 1',
-      artist: 'Spotify',
-      id: 'playlist_1',
-      type: 'playlist' as const
-    }
-  }
-];
+import { MOCK_FRIENDS_SEED, getRandomActivity, FriendActivity } from '@/lib/mockSocial';
 
 export const FriendActivitySidebar = () => {
   const { isSocialSidebarOpen, toggleSocialSidebar } = useUIStore();
   const [mounted, setMounted] = useState(false);
+  const [friends, setFriends] = useState<FriendActivity[]>([]);
 
   useEffect(() => {
     setMounted(true);
+    // Initialize with random tracks
+    setFriends(MOCK_FRIENDS_SEED.map(f => ({
+      ...f,
+      currentTrack: Math.random() > 0.2 ? getRandomActivity() : undefined
+    })));
+
+    // Rotate random friend's activity every 15 seconds
+    const interval = setInterval(() => {
+      setFriends(current => {
+        const next = [...current];
+        const indexToUpdate = Math.floor(Math.random() * next.length);
+        next[indexToUpdate] = {
+          ...next[indexToUpdate],
+          currentTrack: getRandomActivity(),
+          lastActive: 'Now'
+        };
+        return next;
+      });
+    }, 15000);
+
+    return () => clearInterval(interval);
   }, []);
 
   if (!mounted || !isSocialSidebarOpen) return null;
@@ -75,7 +62,7 @@ export const FriendActivitySidebar = () => {
       </div>
 
       <div className="flex-1 overflow-y-auto p-2 flex flex-col gap-1">
-        {MOCK_FRIENDS.map((friend) => (
+        {friends.map((friend) => (
           <FriendRow key={friend.id} friend={friend} />
         ))}
       </div>
