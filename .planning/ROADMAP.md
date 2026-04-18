@@ -2,7 +2,7 @@
 
 ## Milestone v3.0: Social, Search & Management
 
-### Phase 08: Social Presence & Layout Refinement (SOC)
+### Phase 08: Social Presence & Layout Refinement (SOC) [COMPLETED]
 **Goal:** Implement the "Friend Activity" sidebar and polish the responsive shell for dual sidebars.
 - **Requirements**: SOC-01
 - **Success Criteria**:
