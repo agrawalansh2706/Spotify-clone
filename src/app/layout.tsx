@@ -4,6 +4,7 @@ import "./globals.css";
 import Sidebar from "@/components/layout/Sidebar";
 import PlayerBar from "@/components/layout/PlayerBar";
 import BottomTabBar from "@/components/layout/BottomTabBar";
+import { FriendActivitySidebar } from "@/components/layout/FriendActivitySidebar";
 import AuthProvider from "@/components/AuthProvider";
 import SpotifyPlayer from "@/components/SpotifyPlayer";
 
@@ -28,7 +29,7 @@ export default function RootLayout({
         <AuthProvider>
           <SpotifyPlayer />
           <div
-            className="h-screen w-full flex flex-col md:grid md:grid-cols-[280px_1fr] md:grid-rows-[1fr_90px]"
+            className="h-screen w-full flex flex-col md:grid md:grid-cols-[280px_1fr_auto] md:grid-rows-[1fr_90px]"
             style={{ background: '#000' }}
           >
             {/* Sidebar — desktop only */}
@@ -45,8 +46,13 @@ export default function RootLayout({
               {children}
             </main>
 
+            {/* Friend Activity Sidebar — desktop only */}
+            <div className="hidden xl:block h-full md:mt-2" style={{ background: '#000' }}>
+              <FriendActivitySidebar />
+            </div>
+
             {/* Player bar — desktop */}
-            <div className="hidden md:flex md:col-span-2" style={{ background: '#000' }}>
+            <div className="hidden md:flex md:col-span-3" style={{ background: '#000' }}>
               <PlayerBar />
             </div>
 
