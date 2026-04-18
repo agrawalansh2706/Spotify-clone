@@ -59,6 +59,11 @@ function Slider({
 }
 
 export default function PlayerBar() {
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const {
     currentTrack,
     isPlaying,
@@ -85,6 +90,14 @@ export default function PlayerBar() {
     },
     [setVolume]
   );
+
+  if (!mounted) return (
+    <div 
+      className="h-[90px] w-full" 
+      style={{ background: '#000', borderTop: '1px solid rgba(255,255,255,0.08)' }} 
+    />
+  );
+
 
   return (
     <div

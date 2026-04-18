@@ -9,9 +9,14 @@ import { spotifyApiFetch } from '@/lib/spotify';
 export default function Sidebar() {
   const { data: session } = useSession();
   const [playlists, setPlaylists] = useState<any[]>(mockPlaylists);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (session) {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (session && mounted) {
       spotifyApiFetch('/me/playlists', session)
         .then((data) => {
           if (data && data.items) {
@@ -27,7 +32,9 @@ export default function Sidebar() {
     } else {
       setPlaylists(mockPlaylists);
     }
-  }, [session]);
+  }, [session, mounted]);
+
+  if (!mounted) return <div className="w-full h-full bg-black rounded-lg" />;
 
   return (
     <div className="w-full h-full flex flex-col gap-2 relative">

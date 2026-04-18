@@ -36,6 +36,7 @@ export default function HomePage() {
               id: item.id,
               name: item.name,
               description: item.description || 'Spotify Playlist',
+              owner: item.owner?.display_name || 'Spotify',
               coverUrl: item.images?.[0]?.url || 'https://misc.scdn.co/liked-songs/liked-songs-300.png',
               coverColor: '#181818'
             })));
@@ -103,6 +104,7 @@ export default function HomePage() {
                 </div>
               </div>
               <span className="font-bold text-white truncate mb-1 text-sm md:text-base">{playlist.name}</span>
+              <span className="text-[#b1b1b1] text-xs font-medium uppercase tracking-wider mb-1">{playlist.owner || 'Spotify'}</span>
               <span className="text-[#b3b3b3] text-xs md:text-sm line-clamp-2 leading-snug">{playlist.description}</span>
             </Link>
           ))}

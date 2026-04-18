@@ -8,25 +8,24 @@ A high-end web application clone of Spotify, designed primarily as a frontend UI
 
 A pixel-perfect, stunning, and responsive user interface that accurately mirrors Spotify's look and feel, paired with real music streaming via the user's authentic Spotify account.
 
-## Current State
+## Current Milestone: v3.0 Social, Search & Management
 
-**Shipped v2.0 (2026-04-18)**
-Migrated from mock data to the authentic Spotify Web API and Web Playback SDK. Users can now authenticate via Spotify OAuth, browse their real playlists, and stream high-quality audio directly in the browser through the official SDK integration.
+**Goal:** Transform the app into a fully interactive music platform with social features, global search, and library management.
 
-**Shipped v1.0 (2026-04-17)**
-Delivered the responsive UI shell and mobile tab navigation.
+**Target features:**
+- **Search**: Fully functional global search with dynamic results and filtering (Artist, Album, Playlist).
+- **Library Management**: Add "Like" functionality and the ability to create/edit playlists directly in-app.
+- **Social Feed**: Implement a "Friend Activity" sidebar to mirror the Spotify desktop experience.
+- **Lyrics Integration**: Real-time interactive lyrics syncing with the Web Playback SDK.
 
-## Next Milestone Goals (v3.0)
-
-- **Social Features**: Friend activity feed simulation.
-- **Search**: Fully functional global search with filtering (Artist, Album, Playlist).
-- **Library Management**: Ability to like tracks and create/edit playlists directly from the app.
-- **Interactive Lyrics**: Syncing lyrics via a third-party API or Spotify lyrics endpoint.
+## Shipped
+- **v2.0 (2026-04-18)**: Spotify API & Web Playback SDK Integration.
+- **v1.0 (2026-04-17)**: Responsive UI Shell.
 
 ## Out of Scope
-
 - Real backend authentication for non-Spotify functions (we strictly rely on Spotify OAuth).
 - Offline downloading (Browser restriction).
+- Real-time multiplayer synchronization (beyond what Spotify SDK provides).
 
 ## Context
 

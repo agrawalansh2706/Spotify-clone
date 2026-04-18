@@ -7,11 +7,12 @@ updated: 2026-04-18T13:43:00Z
 ---
 
 ## Current Test
-number: 1
-name: SDK Initialization
+number: 2
+name: Remote Playback Command
 expected: |
-  Log in with a Spotify Premium account. Open the browser console. You should see "Ready with Device ID" followed by a long ID.
-  Additionally, open the official Spotify App on your phone/desktop; "Spotify Clone Web Player" should appear in the "Connect to a device" menu.
+  Navigate to any playlist. Double-click a track or click the play icon.
+  The "Spotify Clone Web Player" should begin playing that specific track.
+  The PlayerBar should update with the track title, artist, and album art from the real Spotify stream.
 awaiting: user response
 
 ## Tests
@@ -20,7 +21,7 @@ awaiting: user response
 expected: |
   Log in with a Spotify Premium account. Open the browser console. You should see "Ready with Device ID" followed by a long ID.
   Additionally, open the official Spotify App on your phone/desktop; "Spotify Clone Web Player" should appear in the "Connect to a device" menu.
-result: [pending]
+result: pass
 
 ### 2. Remote Playback Command
 expected: |
@@ -41,9 +42,9 @@ result: [pending]
 
 | Result | Count |
 |--------|-------|
-| Passed | 0     |
+| Passed | 1     |
 | Issues | 0     |
-| Pending| 3     |
+| Pending| 2     |
 | Skipped| 0     |
 
 ## Gaps
