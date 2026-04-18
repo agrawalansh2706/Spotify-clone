@@ -5,6 +5,7 @@ import Sidebar from "@/components/layout/Sidebar";
 import PlayerBar from "@/components/layout/PlayerBar";
 import BottomTabBar from "@/components/layout/BottomTabBar";
 import { FriendActivitySidebar } from "@/components/layout/FriendActivitySidebar";
+import { TopHeader } from "@/components/layout/TopHeader";
 import AuthProvider from "@/components/AuthProvider";
 import SpotifyPlayer from "@/components/SpotifyPlayer";
 
@@ -39,11 +40,14 @@ export default function RootLayout({
 
             {/* Main content area */}
             <main
-              className="flex-1 md:overflow-y-auto rounded-lg relative overflow-hidden md:mt-2 md:mr-2 flex flex-col"
+              className="flex-1 md:overflow-y-auto rounded-lg relative md:mt-2 md:mr-2 flex flex-col"
               id="main-scroll-area"
               style={{ background: '#121212' }}
             >
-              {children}
+              <TopHeader />
+              <div className="flex-1 min-h-0">
+                {children}
+              </div>
             </main>
 
             {/* Friend Activity Sidebar — desktop only */}
