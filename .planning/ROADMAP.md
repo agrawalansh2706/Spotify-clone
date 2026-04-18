@@ -1,39 +1,39 @@
-# Roadmap: Spotify Clone v2.0
+# Project Roadmap: v3.0
 
-## Overview
+## Milestone v3.0: Social, Search & Management
 
-Upgrading the v1.0 UI clone to a functional Spotify client that leverages the real Spotify Web API for user libraries and the Spotify Web Playback SDK for authenticated HDR media streaming.
+### Phase 08: Social Presence & Layout Refinement (SOC)
+**Goal:** Implement the "Friend Activity" sidebar and polish the responsive shell for dual sidebars.
+- **Requirements**: SOC-01
+- **Success Criteria**:
+    - Right-hand friend activity feed is visible on screens > 1200px.
+    - Feed is collapsible/expandable via a toggle in the top bar.
+    - Layout handles three-pane scaling (Sidebar, Main, Friend Activity) without layout shift.
 
-## Phases
+### Phase 09: Global Search & Real-time Results (SRCH)
+**Goal:** Implement the dynamic search interface and link it to the Spotify Search API.
+- **Requirements**: SRCH-01, SRCH-02, SRCH-03, SRCH-04
+- **Success Criteria**:
+    - Typing in `/search` triggers a debounced API call to `GET /v1/search`.
+    - Results view populates with Tracks, Artists, and Playlists.
+    - Category chips (All, Songs, etc.) filter the UI results locally.
+    - Recent searches are saved to `localStorage` and displayed on empty state.
 
-- [x] [**v2.0 Milestone**](milestones/v2.0-ROADMAP.md) — Real Spotify API & SDK Integration. Complete.
-- [x] [**v1.0 Milestone**](milestones/v1.0-ROADMAP.md) — Shell, Global Audio, Core Views, and Premium Aesthetics. Complete.
+### Phase 10: Library Mutations (LIB)
+**Goal:** Enable users to modify their Spotify library (Like tracks, Create playlists).
+- **Requirements**: LIB-01, LIB-02, LIB-03
+- **Success Criteria**:
+    - Clicking the Heart icon in PlayerBar triggers `PUT /v1/me/tracks`.
+    - Sidebar "Create Playlist" button triggers `POST /v1/users/{user_id}/playlists`.
+    - Sidebar list refreshes automatically after creation/deletion.
 
-## Phase Details
+### Phase 11: Synced Lyrics Experience (SOC)
+**Goal:** Integrate a synced lyrics view for an immersive listening experience.
+- **Requirements**: SOC-02
+- **Success Criteria**:
+    - A "Lyrics" button in the PlayerBar opens a full-screen dynamic backdrop.
+    - Lyrics scroll automatically based on SDK `position_ms`.
+    - Current line is highlighted/enlarged.
 
-### Phase 5: Spotify Web API Authentication
-**Goal**: Users can log into the app with their Spotify account and we hold a valid access token.
-**Depends on**: Milestone 1.0 (Completed)
-**Requirements**: [AUTH-01, AUTH-02, AUTH-03]
-**Success Criteria**:
-  1. A "Login with Spotify" button redirects to the authorization gateway.
-  2. The application handles the callback securely.
-  3. The user's name and image display in the header automatically.
-
-### Phase 6: Fetch User Library & Playlists
-**Goal**: Swap static mock playlists out for the logged-in user's authentic Spotify data history.
-**Depends on**: Phase 5
-**Requirements**: [DATA-01, DATA-02, DATA-03]
-**Success Criteria**:
-  1. Sidebar shows a list of the user's saved/favorited playlists.
-  2. Clicking a playlist queries the API `/v1/playlists/{id}`.
-  3. The track list correctly parses Spotify objects into our `TrackRow` components.
-
-### Phase 7: Spotify Web Playback SDK
-**Goal**: Render the official Spotify embedded player script and synchronize its events to the Zustand globals.
-**Depends on**: Phase 6
-**Requirements**: [SDK-01, SDK-02, SDK-03, SDK-04]
-**Success Criteria**:
-  1. The browser registers a new "Spotify Connection Device" attached to the user account.
-  2. Pressing play successfully pipes encrypted audio directly to the browser node.
-  3. Pausing, seeking, and skipping update the central PlayerBar UI without regressions.
+---
+*Last updated: 2026-04-18 after Milestone v2.0 completion*
