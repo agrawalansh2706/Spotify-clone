@@ -1,21 +1,69 @@
-import React from 'react';
+"use client";
+import React, { useEffect, useState, use } from 'react';
 import { notFound } from 'next/navigation';
 import { getPlaylistById } from '@/data/mockData';
 import { Clock3 } from 'lucide-react';
 import TrackRow from '@/components/TrackRow';
 import PlaylistHeader from '@/components/PlaylistHeader';
 import PageTransition from '@/components/PageTransition';
+import { useSession } from "next-auth/react";
+import { spotifyApiFetch } from '@/lib/spotify';
 
 interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-export default async function PlaylistPage({ params }: PageProps) {
-  const { id } = await params;
-  const playlist = getPlaylistById(id);
+export default function PlaylistPage({ params }: PageProps) {
+  const { id } = use(params);
+  const { data: session } = useSession();
+  const [playlist, setPlaylist] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (session) {
+      spotifyApiFetch(`/playlists/${id}`, session)
+        .then(data => {
+          if (data) {
+            // Map Spotify Playlist format to our expected format
+            const mappedPlaylist = {
+              id: data.id,
+              name: data.name,
+              description: data.description,
+              coverUrl: data.images?.[0]?.url,
+              coverColor: '#1ed760', // Could extract color from image later
+              owner: data.owner?.display_name,
+              tracks: data.tracks?.items?.map((item: any) => ({
+                id: item.track.id,
+                title: item.track.name,
+                artist: item.track.artists.map((a: any) => a.name).join(', '),
+                album: item.track.album.name,
+                coverUrl: item.track.album.images?.[0]?.url,
+                duration: Math.floor(item.track.duration_ms / 1000),
+                audioUrl: item.track.preview_url // For real play back we will use web playback SDK later
+              })).filter((t: any) => t.id) || []
+            };
+            setPlaylist(mappedPlaylist);
+          }
+          setLoading(false);
+        })
+        .catch(err => {
+          console.error(err);
+          setPlaylist(getPlaylistById(id)); // Fallback
+          setLoading(false);
+        });
+    } else {
+      setPlaylist(getPlaylistById(id));
+      setLoading(false);
+    }
+  }, [id, session]);
+
+  if (loading) {
+    return <div className="p-8 text-[#b3b3b3]">Loading...</div>;
+  }
+
   if (!playlist) notFound();
 
-  const totalSeconds = playlist.tracks.reduce((acc, t) => acc + t.duration, 0);
+  const totalSeconds = playlist.tracks.reduce((acc: number, t: any) => acc + t.duration, 0);
   const totalMins = Math.floor(totalSeconds / 60);
 
   return (
@@ -43,8 +91,8 @@ export default async function PlaylistPage({ params }: PageProps) {
               <div className="flex justify-end"><Clock3 size={16} /></div>
             </div>
             <div className="flex flex-col">
-              {playlist.tracks.map((track, i) => (
-                <TrackRow key={track.id} track={track} index={i} />
+              {playlist.tracks.map((track: any, i: number) => (
+                <TrackRow key={`${track.id}-${i}`} track={track} index={i} />
               ))}
             </div>
           </div>

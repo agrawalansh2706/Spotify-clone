@@ -1,12 +1,33 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Home, Search, Library, Plus } from 'lucide-react';
 import { mockPlaylists } from '@/data/mockData';
 import { useSession, signIn, signOut } from "next-auth/react";
+import { spotifyApiFetch } from '@/lib/spotify';
 
 export default function Sidebar() {
   const { data: session } = useSession();
+  const [playlists, setPlaylists] = useState<any[]>(mockPlaylists);
+
+  useEffect(() => {
+    if (session) {
+      spotifyApiFetch('/me/playlists', session)
+        .then((data) => {
+          if (data && data.items) {
+            setPlaylists(data.items.map((item: any) => ({
+              id: item.id,
+              name: item.name,
+              coverUrl: item.images?.[0]?.url || 'https://misc.scdn.co/liked-songs/liked-songs-300.png',
+              owner: item.owner?.display_name || 'Spotify',
+            })));
+          }
+        })
+        .catch(console.error);
+    } else {
+      setPlaylists(mockPlaylists);
+    }
+  }, [session]);
 
   return (
     <div className="w-full h-full flex flex-col gap-2 relative">
@@ -35,7 +56,7 @@ export default function Sidebar() {
         {/* Playlists Menu */}
         <div className="flex-1 overflow-y-auto px-2 pb-4">
           <ul className="flex flex-col gap-1">
-            {mockPlaylists.map((playlist) => (
+            {playlists.map((playlist) => (
               <li key={playlist.id}>
                 <Link
                   href={`/playlist/${playlist.id}`}
@@ -43,8 +64,8 @@ export default function Sidebar() {
                 >
                   <img src={playlist.coverUrl} alt="" className="w-12 h-12 rounded object-cover shadow-[0_4px_12px_rgba(0,0,0,0.5)]" />
                   <div className="flex flex-col overflow-hidden">
-                    <span className="text-white truncate">{playlist.name}</span>
-                    <span className="text-neutral-400 text-sm truncate">Playlist • {playlist.owner}</span>
+                    <span className="text-white text-sm font-medium truncate">{playlist.name}</span>
+                    <span className="text-neutral-400 text-xs truncate">Playlist • {playlist.owner}</span>
                   </div>
                 </Link>
               </li>
@@ -55,15 +76,15 @@ export default function Sidebar() {
 
       {session ? (
         <div className="mt-2 bg-[#121212] rounded-lg p-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 overflow-hidden">
             {session.user?.image ? (
-              <img src={session.user.image} alt="" className="w-10 h-10 rounded-full" />
+              <img src={session.user.image} alt="" className="w-10 h-10 rounded-full shrink-0" />
             ) : (
-              <div className="w-10 h-10 rounded-full bg-neutral-800 flex items-center justify-center">?</div>
+              <div className="w-10 h-10 rounded-full bg-neutral-800 flex items-center justify-center shrink-0">?</div>
             )}
-            <span className="font-bold text-white max-w-[100px] truncate">{session.user?.name}</span>
+            <span className="font-bold text-sm text-white truncate">{session.user?.name}</span>
           </div>
-          <button onClick={() => signOut()} className="text-xs font-bold text-neutral-400 hover:text-white">
+          <button onClick={() => signOut()} className="text-xs font-bold text-neutral-400 hover:text-white shrink-0">
             Log out
           </button>
         </div>

@@ -8,10 +8,10 @@ A pixel-perfect, stunning, and responsive user interface that accurately mirrors
 [Status: initialized]
 
 ## Current Focus
-Phase 5: Spotify Web API Authentication
+Phase 6: Fetch User Library & Playlists
 
 ## Next Action
-`/gsd-plan-phase 5`
+`/gsd-plan-phase 6`
 
 ## Accumulated Context
 ### Lessons Learned
